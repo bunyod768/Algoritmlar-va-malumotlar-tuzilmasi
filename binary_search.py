@@ -1,6 +1,12 @@
+from datetime import datetime
+import random as r
 # royxat tartiblangan bolishi kerak!
-nums = [1,2,4,6,8,10,24]
+nums = []
+for i in range(0,100001):
+    nums.append(r.randint(1,10000))
+
 def binary_search(list,item):
+    start = datetime.now()
     L = 0
     H = len(nums) - 1
     while L <= H :
@@ -10,10 +16,12 @@ def binary_search(list,item):
         if item > list[M]:
             L = M + 1
         if item == list[M]:
-            return M 
+            end = datetime.now()
+            return M,end - start
+    end = datetime.now()
+    return None,end - start
 
-    return None
-
-print(binary_search(nums,10))
-
+result,defference = binary_search(nums,10)
+print('qiymat indeksi:',result)
+print('ishlatilgan vaqt:',defference)
 
