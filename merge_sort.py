@@ -1,65 +1,50 @@
-from colorama import Fore, Back, Style
-# Python program for implementation of MergeSort
-def mergeSort(arr):
-	if len(arr) > 1:
+from datetime import datetime as dt
 
-		# Finding the mid of the array
-		mid = len(arr)//2
+def mergeSort(array: list) -> list:
+    start = dt.now()
 
-		# Dividing the array elements
-		L = arr[:mid]
-# 		print(Back.GREEN + str(L))
+    def merge(arr):
+        if len(arr) > 1:
+            mid = len(arr) // 2
+            left = arr[:mid]
+            right = arr[mid:]
 
-		# into 2 halves
-		R = arr[mid:]
-# 		print(Back.RED + str(R))
+            merge(left)
+            merge(right)
 
-		# Sorting the first half
-		mergeSort(L)
+            i = j = k = 0
 
-		# Sorting the second half
-		mergeSort(R)
+            # Ikkala bo'lakni solishtirib, birlashtirish
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    arr[k] = left[i]
+                    i += 1
+                else:
+                    arr[k] = right[j]
+                    j += 1
+                k += 1
 
-		i = j = k = 0
+            # Qolgan elementlarni qo'shish
+            while i < len(left):
+                arr[k] = left[i]
+                i += 1
+                k += 1
 
-		# Copy data to temp arrays L[] and R[]
-		while i < len(L) and j < len(R):
-			if L[i] < R[j]:
-				arr[k] = L[i]
-				i += 1
-			else:
-				arr[k] = R[j]
-				j += 1
-			k += 1
-            
-		# Checking if any element was left
-		while i < len(L):
-			arr[k] = L[i]
-			i += 1
-			k += 1
+            while j < len(right):
+                arr[k] = right[j]
+                j += 1
+                k += 1
 
-		while j < len(R):
-			arr[k] = R[j]
-			j += 1
-			k += 1
-		print(Back.CYAN + str(L))
-		print(Back.BLUE + str(R))
-# Code to print the list
+    merge(array)
+    end = dt.now()
+    farq = end - start
+    return array, farq
 
-
-def printList(arr):
-	for i in range(len(arr)):
-		print(arr[i], end=" ")
-	print()
-
-
-# Driver Code
-if __name__ == '__main__':
-	arr = [34, 25, 20, 5, 44, 12,9]
-	print("Tartibsiz array:", end="\n")
-	printList(arr)
-	mergeSort(arr)
-	print(Style.RESET_ALL + "Tartibli array: ", end="\n")
-	printList(arr)
-
-# This code is contributed by Mayank Khanna
+# Misol uchun
+A = []
+import random as rd
+for i in range(1000000):
+    A.append(rd.randint(-100,100))
+tartib, farq_vaqt = mergeSort(A)
+print("merge sort")
+print(f"tartiblangan ro'yxat:\nketgan vaqti: {farq_vaqt}")
